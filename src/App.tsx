@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { AppBar, Toolbar, Typography } from "@material-ui/core";
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Link,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
+import styled from "styled-components";
+import Home from "./screens/Home";
+import UserInfo from "./screens/UserInfo";
 
-function App() {
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: #fff;
+`;
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" style={{ flexGrow: 1 }}>
+            <StyledLink to="/users">Usuarios</StyledLink>
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Switch>
+        <Route exact path="/users" component={Home} />
+        <Route exact path="/users/:id" component={UserInfo} />
+        <Route path="*">
+          <Redirect to="/users" />
+        </Route>
+      </Switch>
+    </Router>
   );
-}
+};
 
 export default App;
